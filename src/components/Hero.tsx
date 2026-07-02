@@ -30,9 +30,9 @@ export default function Hero() {
       title.innerHTML = words
         .map(
           (word) =>
-            `<span class="inline-block overflow-hidden"><span class="title-word inline-block translate-y-[100%]">${word}&nbsp;</span></span>`
+            `<span class="inline-block overflow-hidden align-top"><span class="title-word inline-block translate-y-[100%]">${word}</span></span>`
         )
-        .join("");
+        .join(" ");
     }
 
     const titleWords = title?.querySelectorAll(".title-word");

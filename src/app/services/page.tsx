@@ -26,62 +26,15 @@ import Navbar from "@/components/Navbar";
 import Process from "@/components/Process";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Link from "next/link";
+import { SERVICE_CONTENT } from "@/lib/services";
 
 // Register ScrollTrigger
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const SERVICES_GRID_DATA = [
-  {
-    icon: Globe,
-    title: "Business Websites",
-    description:
-      "High-end custom multi-page websites designed to establish brand authority, build trust, and consistently generate organic inbound leads for your business.",
-    color: "from-purple-500 to-indigo-500",
-    glowColor: "rgba(168, 85, 247, 0.15)",
-  },
-  {
-    icon: Zap,
-    title: "Landing Pages",
-    description:
-      "Conversion-focused single page designs optimized for digital marketing campaigns. Built with persuasive copywriting structure to maximize customer action.",
-    color: "from-indigo-500 to-blue-500",
-    glowColor: "rgba(99, 102, 241, 0.15)",
-  },
-  {
-    icon: Calendar,
-    title: "Booking & Appointment Systems",
-    description:
-      "Interactive client onboarding funnels integrated with scheduling software (Cal.com, Calendly) and payment gateways (Stripe) to fully automate booking.",
-    color: "from-blue-500 to-cyan-500",
-    glowColor: "rgba(59, 130, 246, 0.15)",
-  },
-  {
-    icon: RefreshCw,
-    title: "Website Redesign",
-    description:
-      "Revamp your slow, outdated web interface into a high-performance system. We modernize your visuals and performance while carefully preserving your SEO links.",
-    color: "from-cyan-500 to-teal-500",
-    glowColor: "rgba(6, 182, 212, 0.15)",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Website Maintenance",
-    description:
-      "Keep your digital asset running at peak performance. Monthly speed checks, daily secure cloud backups, security patching, and on-demand content edits.",
-    color: "from-teal-500 to-emerald-500",
-    glowColor: "rgba(20, 184, 166, 0.15)",
-  },
-  {
-    icon: TrendingUp,
-    title: "Performance & SEO Optimization",
-    description:
-      "Maximize your search engine footprint. We clean up your database, optimize core web vitals, index semantic schemas, and boost rankings above local competitors.",
-    color: "from-emerald-500 to-purple-500",
-    glowColor: "rgba(16, 185, 129, 0.15)",
-  },
-];
+const SERVICES_GRID_DATA = SERVICE_CONTENT;
 
 const WHAT_IS_INCLUDED_DATA = [
   {
@@ -401,9 +354,10 @@ export default function ServicesPage() {
               {SERVICES_GRID_DATA.map((service, index) => {
                 const IconComponent = service.icon;
                 return (
-                  <div
+                  <Link
                     key={index}
-                    className="service-page-card group relative p-8 rounded-3xl bg-zinc-900/20 border border-white/5 hover:border-purple-500/20 hover:bg-zinc-900/30 overflow-hidden backdrop-blur-sm shadow-xl flex flex-col justify-between"
+                    href={`/services/${service.slug}`}
+                    className="service-page-card group relative p-8 rounded-3xl bg-zinc-900/20 border border-white/5 hover:border-purple-500/20 hover:bg-zinc-900/30 overflow-hidden backdrop-blur-sm shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1"
                     style={{
                       minHeight: "340px",
                       "--mouse-x": "0px",
@@ -418,6 +372,11 @@ export default function ServicesPage() {
                       }}
                     />
 
+                    <div className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-between border-t border-white/5 bg-zinc-950/35 px-8 py-4 text-xs font-semibold uppercase tracking-[0.25em] text-zinc-400 transition-colors duration-300 group-hover:text-white">
+                      <span>View details</span>
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+
                     {/* Content */}
                     <div className="relative z-10 flex flex-col gap-6">
                       {/* Icon */}
@@ -431,14 +390,14 @@ export default function ServicesPage() {
                           {service.title}
                         </h3>
                         <p className="text-zinc-400 leading-relaxed font-medium text-sm sm:text-base">
-                          {service.description}
+                          {service.shortDescription}
                         </p>
                       </div>
                     </div>
 
                     {/* Subtle border shine effect */}
                     <div className="absolute inset-0 border border-transparent rounded-3xl pointer-events-none z-10 group-hover:border-white/10 transition-colors duration-500" />
-                  </div>
+                  </Link>
                 );
               })}
             </div>

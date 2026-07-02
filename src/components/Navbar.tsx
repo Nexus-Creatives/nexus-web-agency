@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { gsap } from "gsap";
 import { ArrowRight, Cpu } from "lucide-react";
 
@@ -124,23 +125,25 @@ export default function Navbar() {
           className="flex items-center gap-2 cursor-pointer group"
           onClick={() => handleScroll("hero")}
         >
-          <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-transform duration-300 group-hover:scale-105">
-            <Cpu className="w-5 h-5 text-white transition-transform duration-500 group-hover:rotate-180" />
-            <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-          <span className="font-sans font-black text-2xl tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">
-            NEXUS
-          </span>
+          <Link href="/" className="flex items-center gap-2 group">
+  <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-transform duration-300 group-hover:scale-105">
+    <Cpu className="w-5 h-5 text-white transition-transform duration-500 group-hover:rotate-180" />
+    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </div>
+  <span className="font-sans font-black text-2xl tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">
+    NEXUS
+  </span>
+</Link>
         </div>
 
         {/* Links */}
         <nav ref={linksRef} className="hidden md:flex items-center gap-8">
-          <a
-            onClick={() => handleScroll("services")}
+          <Link
+            href="/services"
             className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
           >
             Services
-          </a>
+          </Link>
           <a
             onClick={() => handleScroll("growth")}
             className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
