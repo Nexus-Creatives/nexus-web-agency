@@ -148,6 +148,12 @@ export default function Navbar() {
             Growth Calculator
           </a>
           <a
+            onClick={() => handleScroll("process")}
+            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
+          >
+            Our Process
+          </a>
+          <a
             onClick={() => handleScroll("portfolio")}
             className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
           >

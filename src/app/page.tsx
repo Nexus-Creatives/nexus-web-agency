@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ROISection from "@/components/ROISection";
 import Services from "@/components/Services";
+import Process from "@/components/Process";
 import Portfolio from "@/components/Portfolio";
 import Stats from "@/components/Stats";
 import Contact from "@/components/Contact";
@@ -28,6 +29,9 @@ export default function Home() {
         {/* Section 3: Value/ROI Sliders Simulator */}
         <ROISection />
 
+        {/* Section 3.5: Our Process Timeline */}
+        <Process />
+
         {/* Section 4: Before vs After Interactive Swipe */}
         <Portfolio />
 
@@ -43,3 +47,4 @@ export default function Home() {
     </>
   );
 }
+
