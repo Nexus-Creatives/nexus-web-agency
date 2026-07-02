@@ -26,9 +26,6 @@ export default function Home() {
         {/* Section 2: Capabilites / Services */}
         <Services />
 
-        {/* Section 3: Value/ROI Sliders Simulator */}
-        <ROISection />
-
         {/* Section 3.5: Our Process Timeline */}
         <Process />
 
