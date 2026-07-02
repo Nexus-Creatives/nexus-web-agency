@@ -172,14 +172,14 @@ export default function Navbar() {
 
         {/* CTA */}
         <div>
-          <button
-            ref={ctaRef}
-            onClick={() => handleScroll("contact")}
+          <Link
+            href="/contact"
+           
             className="relative px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-sm flex items-center gap-2 hover:bg-zinc-200 transition-colors duration-300 shadow-[0_4px_20px_rgba(255,255,255,0.15)] group"
           >
             Get a Website
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
       </div>
     </header>
