@@ -3,7 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Send, CheckCircle, Flame, Server, ShieldCheck, Mail, ArrowRight } from "lucide-react";
+import {
+  Send,
+  CheckCircle,
+  Flame,
+  Server,
+  ShieldCheck,
+  Mail,
+  ArrowRight,
+  Globe2,
+  Camera,
+  Link2,
+  Code2,
+  Building2,
+} from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +26,7 @@ export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const formBoxRef = useRef<HTMLDivElement>(null);
-  const nodePlexusRef = useRef<HTMLDivElement>(null);
+  const contactPanelRef = useRef<HTMLDivElement>(null);
 
   const [formState, setFormState] = useState({
     name: "",
@@ -29,9 +42,9 @@ export default function Contact() {
   useEffect(() => {
     const header = headerRef.current;
     const formBox = formBoxRef.current;
-    const nodePlexus = nodePlexusRef.current;
+    const contactPanel = contactPanelRef.current;
 
-    if (!header || !formBox || !nodePlexus) return;
+    if (!header || !formBox || !contactPanel) return;
 
     // Scroll trigger entrance
     gsap.fromTo(
@@ -49,7 +62,7 @@ export default function Contact() {
     );
 
     gsap.fromTo(
-      [formBox, nodePlexus],
+      [formBox, contactPanel],
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -156,50 +169,82 @@ export default function Contact() {
 
         {/* Contact Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto">
-          {/* Node Plexus Graphics Indicator (Left) */}
+          {/* Contact Links Panel (Left) */}
           <div
-            ref={nodePlexusRef}
-            className="lg:col-span-5 flex flex-col items-center justify-center p-8 bg-zinc-900/30 border border-white/10 rounded-3xl backdrop-blur-sm shadow-xl min-h-[400px] relative overflow-hidden"
+            ref={contactPanelRef}
+            className="lg:col-span-5 flex flex-col justify-center p-8 bg-zinc-900/30 border border-white/10 rounded-3xl backdrop-blur-sm shadow-xl min-h-[400px] relative overflow-hidden"
           >
             <div className="absolute -top-12 -left-12 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl" />
             <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl" />
 
             {!submitted ? (
-              <div className="w-full flex flex-col items-center gap-8 z-10">
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest text-center">
-                  Node Grid Alignment Status
-                </span>
-
-                {/* SVG Connecting Paths */}
-                <div className="relative w-64 h-64">
-                  <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 200 200">
-                    <line x1="40" y1="40" x2="100" y2="40" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                    <line x1="100" y1="40" x2="160" y2="40" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                    <line x1="160" y1="40" x2="160" y2="100" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                    <line x1="160" y1="100" x2="100" y2="100" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                    <line x1="100" y1="100" x2="40" y2="100" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                    <line x1="40" y1="100" x2="40" y2="160" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                    <line x1="40" y1="160" x2="100" y2="160" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                    <line x1="100" y1="160" x2="160" y2="160" stroke="#27272a" strokeWidth="2" className="interactive-path" strokeDasharray="100" strokeDashoffset="100" />
-                  </svg>
-
-                  {/* Physical Nodes */}
-                  <div className="absolute top-[30px] left-[30px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  <div className="absolute top-[30px] left-[90px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  <div className="absolute top-[30px] left-[150px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  
-                  <div className="absolute top-[90px] left-[150px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  <div className="absolute top-[90px] left-[90px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  <div className="absolute top-[90px] left-[30px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  
-                  <div className="absolute top-[150px] left-[30px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  <div className="absolute top-[150px] left-[90px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
-                  <div className="absolute top-[150px] left-[150px] w-5 h-5 bg-zinc-650 border-2 border-zinc-950 rounded-full interactive-node" />
+              <div className="w-full max-w-sm mx-auto flex flex-col gap-6 z-10">
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-bold text-zinc-500 uppercase tracking-[0.28em]">
+                    Contact Channels
+                  </span>
+                  <h3 className="text-2xl font-black text-white tracking-tight">
+                    Reach the Nexus team
+                  </h3>
+                  <p className="text-sm leading-relaxed text-zinc-400">
+                    Use any of these channels to connect with us. We keep replies fast and direct.
+                  </p>
                 </div>
 
-                <div className="text-center flex flex-col gap-1.5">
-                  <div className="text-xs font-bold text-zinc-400">Complete form to light up nodes</div>
-                  <div className="text-[10px] text-zinc-500 font-medium">Establishes secure, direct route to Nexus dev team</div>
+                <div className="grid grid-cols-1 gap-3">
+                    {[
+                      {
+                        icon: Mail,
+                        label: "Contact",
+                        value: "nexuscreatives.dev@gmail.com",
+                        href: "mailto:nexuscreatives.dev@gmail.com",
+                      },
+                      {
+                        icon: Globe2,
+                        label: "Facebook",
+                        value: "Nexus Creatives",
+                        href: "https://facebook.com/nexuscreatives",
+                      },
+                      {
+                        icon: Camera,
+                        label: "Instagram",
+                        value: "nexuscreatives",
+                        href: "https://instagram.com/nexuscreatives",
+                      },
+                      {
+                        icon: Link2,
+                        label: "LinkedIn",
+                        value: "nexuscreatives",
+                        href: "https://linkedin.com/company/nexuscreatives",
+                      },
+                      {
+                        icon: Code2,
+                        label: "GitHub",
+                        value: "nexuscreatives",
+                        href: "https://github.com/nexuscreatives",
+                      },
+                  ].map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel={item.href.startsWith("mailto:") ? undefined : "noreferrer"}
+                      className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-zinc-950/50 px-4 py-3 transition-colors duration-200 hover:border-white/20 hover:bg-white/5"
+                    >
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-cyan-300 ring-1 ring-white/10 transition-colors duration-200 group-hover:bg-cyan-500/10 group-hover:text-cyan-200">
+                        <item.icon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-zinc-500">
+                          {item.label}
+                        </div>
+                        <div className="truncate text-sm font-semibold text-white">
+                          {item.value}
+                        </div>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-zinc-500 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-white" />
+                    </a>
+                  ))}
                 </div>
               </div>
             ) : (
@@ -209,7 +254,7 @@ export default function Contact() {
                 </div>
                 <h3 className="text-xl font-bold text-white">System Synchronized</h3>
                 <p className="text-xs text-zinc-400 leading-relaxed font-medium">
-                  We've successfully established your business profile. Node connection logs generated.
+                  We&apos;ve successfully established your business profile. Node connection logs generated.
                 </p>
                 <div className="bg-zinc-950/80 p-4 rounded-xl border border-white/5 text-[10px] text-left font-mono text-cyan-400 flex flex-col gap-1">
                   <div>&gt; NEXUS_AUDIT_STATE: ENQUEUED</div>
@@ -304,7 +349,7 @@ export default function Contact() {
                     <option value="bookings">Need more local bookings / inquiries</option>
                     <option value="rebranding">Current site looks outdated & unprofessional</option>
                     <option value="speed">Website is too slow & loses mobile visitors</option>
-                    <option value="none">Don't have a website at all</option>
+                    <option value="none">Don&apos;t have a website at all</option>
                   </select>
                 </div>
 
@@ -322,7 +367,8 @@ export default function Contact() {
                   ) : (
                     <>
                       <Send className="w-4 h-4 transition-transform duration-300 group-hover:rotate-45" />
-                      Initiate Launch Strategy Call
+                      <span className="sm:hidden">Start My Strategy Call</span>
+                      <span className="hidden sm:inline">Initiate Launch Strategy Call</span>
                     </>
                   )}
                 </button>
@@ -336,7 +382,7 @@ export default function Contact() {
                   Thank you, <span className="text-white font-extrabold">{formState.name}</span>! We have queued the audit for <span className="text-white font-extrabold">{formState.business}</span>. 
                 </p>
                 <p className="text-zinc-400 font-medium leading-relaxed">
-                  A senior design architect is already inspecting your local competitors and checking search queries. We'll send your customized audit video and schedule details via <span className="text-cyan-400 font-extrabold">{formState.email}</span> shortly.
+                  A senior design architect is already inspecting your local competitors and checking search queries. We&apos;ll send your customized audit video and schedule details via <span className="text-cyan-400 font-extrabold">{formState.email}</span> shortly.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-white/5 pt-6 mt-2">

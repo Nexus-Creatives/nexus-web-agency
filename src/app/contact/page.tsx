@@ -34,13 +34,13 @@ export default function ContactPage() {
           <section ref={heroRef} className="text-center mb-20">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-950/20 text-purple-300 font-semibold text-xs tracking-wider uppercase backdrop-blur-sm mb-6">
               <Sparkles className="w-3.5 h-3.5" />
-              Let's Connect
+              Let&apos;s Connect
             </div>
             <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-6">
-              Start Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Digital Evolution</span>
+              Start Your <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-cyan-400">Digital Evolution</span>
             </h1>
             <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto">
-              Ready to scale? Whether you have a clear vision or need us to build one, let's start the conversation.
+              Ready to scale? Whether you have a clear vision or need us to build one, let&apos;s start the conversation.
             </p>
           </section>
 
@@ -52,9 +52,9 @@ export default function ContactPage() {
               <h2 className="text-2xl font-bold text-white">Direct Channels</h2>
               <div className="space-y-6">
                 {[
-                  { icon: Mail, label: "Email", value: "hello@nexus.agency" },
+                  { icon: Mail, label: "Email", value: "nexuscreatives.dev@gmail.com" },
                   { icon: Phone, label: "Call/Text", value: "+1 (555) 000-0000" },
-                  { icon: MapPin, label: "Base", value: "Global Digital Agency" },
+                  { icon: MapPin, label: "Base", value: "Batangas PH" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-4 group">
                     <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-purple-400 group-hover:bg-purple-500/20 transition-colors">

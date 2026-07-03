@@ -146,7 +146,7 @@ export default function Process() {
 
         // Cards fade-in slide-right
         const wrappers = gsap.utils.toArray(".process-card-wrapper");
-        wrappers.forEach((wrapper: any) => {
+        wrappers.forEach((wrapper) => {
           gsap.fromTo(
             wrapper,
             { opacity: 0, x: -30 },

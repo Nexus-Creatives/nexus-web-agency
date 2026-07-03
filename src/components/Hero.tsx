@@ -30,7 +30,7 @@ export default function Hero() {
       title.innerHTML = words
         .map(
           (word) =>
-            `<span class="inline-block overflow-hidden align-top"><span class="title-word inline-block translate-y-[100%]">${word}</span></span>`
+            `<span class="inline-block overflow-hidden align-top"><span class="title-word inline-block translate-y-full">${word}</span></span>`
         )
         .join(" ");
     }
@@ -144,8 +144,8 @@ export default function Hero() {
       <PlexusCanvas />
 
       {/* Decorative Radial Glows */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none z-0" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-87.5 h-87.5 sm:w-125 sm:h-125 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-87.5 h-87.5 sm:w-125 sm:h-125 bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none z-0" />
 
       {/* Hero Content Wrapper */}
       <div className="relative z-10 w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -182,17 +182,10 @@ export default function Hero() {
           <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
             <button
               onClick={() => handleScroll("contact")}
-              className="px-8 py-4 rounded-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white flex items-center justify-center gap-2 shadow-[0_8px_30px_rgba(168,85,247,0.35)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] group"
+              className="px-8 py-4 rounded-xl font-bold bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white flex items-center justify-center gap-2 shadow-[0_8px_30px_rgba(168,85,247,0.35)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] group"
             >
               Get More Customers Now
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
-            <button
-              onClick={() => handleScroll("growth")}
-              className="px-8 py-4 rounded-xl font-bold border border-white/10 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center gap-2 backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            >
-              Calculate Your ROI
-              <TrendingUp className="w-5 h-5 text-cyan-400" />
             </button>
           </div>
 
@@ -229,7 +222,7 @@ export default function Hero() {
         <div className="lg:col-span-5 flex items-center justify-center">
           <div
             ref={glassCardRef}
-            className="relative w-full max-w-[420px] aspect-[4/5] rounded-3xl border border-white/15 bg-zinc-900/40 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-6 overflow-hidden flex flex-col justify-between"
+            className="relative w-full max-w-105 aspect-4/5 rounded-3xl border border-white/15 bg-zinc-900/40 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-6 overflow-hidden flex flex-col justify-between"
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Embedded glowing node grids */}
@@ -266,7 +259,7 @@ export default function Hero() {
                     <span className="text-emerald-400 font-bold">+184%</span>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
-                    <div className="h-full w-[85%] bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full" />
+                    <div className="h-full w-[85%] bg-linear-to-r from-purple-500 to-cyan-500 rounded-full" />
                   </div>
                 </div>
 
@@ -276,7 +269,7 @@ export default function Hero() {
                     <span className="text-cyan-400 font-bold">99/100</span>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
-                    <div className="h-full w-[99%] bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full animate-pulse" />
+                    <div className="h-full w-[99%] bg-linear-to-r from-cyan-500 to-emerald-500 rounded-full animate-pulse" />
                   </div>
                 </div>
 
@@ -286,20 +279,20 @@ export default function Hero() {
                     <span className="text-indigo-400 font-bold">Top 3 Rank</span>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
-                    <div className="h-full w-[90%] bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
+                    <div className="h-full w-[90%] bg-linear-to-r from-indigo-500 to-purple-500 rounded-full" />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Bottom visual hook */}
-            <div className="border-t border-white/10 pt-4 flex items-center justify-between bg-zinc-950/30 p-3 rounded-2xl border border-white/5" style={{ transform: "translateZ(15px)" }}>
+            <div className="border border-white/10 pt-4 flex items-center justify-between bg-zinc-950/30 p-3 rounded-2xl" style={{ transform: "translateZ(15px)" }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg">
                   N
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">Let's Connect Nodes</div>
+                  <div className="text-xs font-bold text-white">Let&apos;s Connect Nodes</div>
                   <div className="text-[10px] text-zinc-500">nexus.agency/activate</div>
                 </div>
               </div>
@@ -321,7 +314,7 @@ export default function Hero() {
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
-          className="relative block w-full h-[60px] text-zinc-950 fill-current rotate-180"
+          className="relative block w-full h-15 text-zinc-950 fill-current rotate-180"
         >
           <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"></path>
         </svg>

@@ -24,6 +24,7 @@ type ServiceDetailPageProps = {
 
 export default function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
   const service = getServiceBySlug(slug);
+  const serviceSlug = service?.slug;
   const isLongTitle = service ? service.title.length > 22 : false;
   const heroRef = useRef<HTMLDivElement>(null);
   const highlightsRef = useRef<HTMLDivElement>(null);
@@ -31,10 +32,6 @@ export default function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
   const faqRef = useRef<HTMLDivElement>(null);
   const relatedRef = useRef<HTMLDivElement>(null);
   const [openFAQIndex, setOpenFAQIndex] = useState<number | null>(0);
-
-  if (!service) {
-    return null;
-  }
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -82,7 +79,11 @@ export default function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
     animateSection(process, ".animate-process");
     animateSection(faq, ".animate-faq");
     animateSection(related, ".animate-related");
-  }, [service.slug]);
+  }, [serviceSlug]);
+
+  if (!service) {
+    return null;
+  }
 
   const relatedServices = SERVICE_CONTENT.filter(
     (item) => item.slug !== service.slug
@@ -117,7 +118,7 @@ export default function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
                 href="/#contact"
                 className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors duration-200 hover:bg-zinc-200"
               >
-                Start a Project
+                
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

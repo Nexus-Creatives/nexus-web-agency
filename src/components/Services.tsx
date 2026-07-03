@@ -116,8 +116,8 @@ export default function Services() {
       className="relative bg-zinc-950 py-24 px-6 sm:px-12 md:px-24 overflow-hidden border-b border-white/5"
     >
       {/* Decorative gradients */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-125 h-125 bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-125 h-125 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
@@ -130,7 +130,7 @@ export default function Services() {
             Designed To Attract. Built To Perform.
           </h2>
           <p className="text-zinc-400 font-medium sm:text-lg">
-            We don't just build sites that look pretty. We engineer interactive digital solutions with one single goal: making your business more profitable.
+            We don&apos;t just build sites that look pretty. We engineer interactive digital solutions with one single goal: making your business more profitable.
           </p>
         </div>
 
@@ -163,13 +163,13 @@ export default function Services() {
                 {/* Content */}
                 <div className="relative z-10 flex flex-col gap-6">
                   {/* Icon Box */}
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${service.color} flex items-center justify-center shadow-lg shadow-black/50 transition-transform duration-300 group-hover:scale-110`}>
+                  <div className={`w-14 h-14 rounded-2xl bg-linear-to-tr ${service.color} flex items-center justify-center shadow-lg shadow-black/50 transition-transform duration-300 group-hover:scale-110`}>
                     <IconComponent className="w-7 h-7 text-white" />
                   </div>
 
                   {/* Title & Description */}
                   <div className="flex flex-col gap-3">
-                    <h3 className="text-2xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-zinc-300 transition-colors duration-300">
+                    <h3 className="text-2xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-white group-hover:to-zinc-300 transition-colors duration-300">
                       {service.title}
                     </h3>
                     <p className="text-zinc-400 leading-relaxed font-medium text-sm sm:text-base">

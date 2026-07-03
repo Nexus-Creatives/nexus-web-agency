@@ -419,7 +419,7 @@ export default function ServicesPage() {
                 Built-In Premium Standards
               </div>
               <h2 className="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tight">
-                What's Included Out Of The Box
+                What&apos;s Included Out Of The Box
               </h2>
               <p className="text-zinc-400 font-medium sm:text-lg">
                 Every website we engineer is equipped with standard optimization metrics. No cut corners, no shortcuts.

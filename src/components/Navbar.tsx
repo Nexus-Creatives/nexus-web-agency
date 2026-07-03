@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ArrowRight, Cpu, Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
   const navRef = useRef<HTMLDivElement>(null);
@@ -124,20 +125,25 @@ export default function Navbar() {
       <div className="flex items-center justify-between">
         {/* Logo */}
         <div
-          ref={logoRef}
-          className="flex items-center gap-2 cursor-pointer group"
-          onClick={() => handleScroll("hero")}
-        >
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="relative w-10 h-10 rounded-xl bg-linear-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-transform duration-300 group-hover:scale-105">
-              <Cpu className="w-5 h-5 text-white transition-transform duration-500 group-hover:rotate-180" />
-              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <span className="font-sans font-black text-2xl tracking-wider bg-clip-text text-transparent bg-linear-to-r from-white via-zinc-200 to-zinc-400">
-              NEXUS
-            </span>
-          </Link>
-        </div>
+  ref={logoRef}
+  className="flex items-center gap-2 cursor-pointer group"
+  onClick={() => handleScroll("hero")}
+>
+  <Link href="/" className="flex items-center gap-2 group">
+    <div className="relative w-10 h-10 flex items-center justify-center overflow-visible">
+  <Image
+    src="/nexuslogomain.png"
+    alt="Nexus logo"
+    width={40}
+    height={40}
+    className="w-16 h-16 object-contain" // scale up until it visually fills the space
+  />
+</div>
+    <span className="font-sans font-black text-2xl tracking-wider bg-clip-text text-transparent bg-linear-to-r from-white via-zinc-200 to-zinc-400">
+      NEXUS
+    </span>
+  </Link>
+</div>
 
         {/* Links - desktop only */}
         <nav ref={linksRef} className="hidden md:flex items-center gap-8">
@@ -171,7 +177,7 @@ export default function Navbar() {
         </nav>
 
         {/* CTA - desktop only */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <Link
             href="/contact"
             className="relative px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-sm flex items-center gap-2 hover:bg-zinc-200 transition-colors duration-300 shadow-[0_4px_20px_rgba(255,255,255,0.15)] group"
@@ -187,7 +193,7 @@ export default function Navbar() {
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileMenuOpen}
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-white/5 text-white active:scale-95 transition-transform duration-150 touch-manipulation"
+          className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-white/5 text-white active:scale-95 transition-transform duration-150 touch-manipulation"
         >
           {isMobileMenuOpen ? (
             <X className="w-5 h-5" />

@@ -140,7 +140,7 @@ export default function Portfolio() {
             Before & After Showcase
           </div>
           <h2 className="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tight">
-            See The Transformation.
+            See The Difference.
           </h2>
           <p className="text-zinc-400 font-medium sm:text-lg">
             Drag the slider below to compare standard templates with a custom-engineered Nexus design. We build sites that convey credibility, load in a flash, and capture buyers.

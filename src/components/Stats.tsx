@@ -111,8 +111,8 @@ export default function Stats() {
       className="relative bg-zinc-950 py-24 px-6 sm:px-12 md:px-24 overflow-hidden border-b border-white/5"
     >
       {/* Decorative glows */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[350px] h-[350px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[350px] h-[350px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-87.5 h-87.5 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-87.5 h-87.5 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
@@ -124,7 +124,7 @@ export default function Stats() {
             An Outdated Website is Costing You Customers.
           </h2>
           <p className="text-zinc-400 font-medium sm:text-lg">
-            In today's digital economy, your website is your virtual storefront. A poor website doesn't just look bad—it actively pushes qualified leads straight into the arms of your competitors.
+            In today&apos;s digital economy, your website is your virtual storefront. A poor website doesn&apos;t just look bad—it actively pushes qualified leads straight into the arms of your competitors.
           </p>
         </div>
 
@@ -156,7 +156,7 @@ export default function Stats() {
                   {/* Counting number */}
                   <div className="text-5xl sm:text-6xl font-black text-white font-mono tracking-tight flex items-baseline gap-0.5">
                     <span
-                      className="stat-number bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300"
+                      className="stat-number bg-clip-text text-transparent bg-linear-to-r from-white to-zinc-300"
                       data-target={stat.targetNum}
                     >
                       0
