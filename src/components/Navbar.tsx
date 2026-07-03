@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
-import { ArrowRight, Cpu } from "lucide-react";
+import { ArrowRight, Cpu, Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const navRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const nav = navRef.current;
@@ -107,6 +109,7 @@ export default function Navbar() {
   }, []);
 
   const handleScroll = (id: string) => {
+    setIsMobileMenuOpen(false);
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
@@ -116,7 +119,7 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-7xl backdrop-blur-md bg-zinc-950/70 border border-white/10 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] px-6 py-3"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-7xl pointer-events-auto backdrop-blur-md bg-zinc-950/70 border border-white/10 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] px-6 py-3"
     >
       <div className="flex items-center justify-between">
         {/* Logo */}
@@ -126,54 +129,125 @@ export default function Navbar() {
           onClick={() => handleScroll("hero")}
         >
           <Link href="/" className="flex items-center gap-2 group">
-  <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-transform duration-300 group-hover:scale-105">
-    <Cpu className="w-5 h-5 text-white transition-transform duration-500 group-hover:rotate-180" />
-    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-  </div>
-  <span className="font-sans font-black text-2xl tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">
-    NEXUS
-  </span>
-</Link>
+            <div className="relative w-10 h-10 rounded-xl bg-linear-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-transform duration-300 group-hover:scale-105">
+              <Cpu className="w-5 h-5 text-white transition-transform duration-500 group-hover:rotate-180" />
+              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            <span className="font-sans font-black text-2xl tracking-wider bg-clip-text text-transparent bg-linear-to-r from-white via-zinc-200 to-zinc-400">
+              NEXUS
+            </span>
+          </Link>
         </div>
 
-        {/* Links */}
+        {/* Links - desktop only */}
         <nav ref={linksRef} className="hidden md:flex items-center gap-8">
           <Link
             href="/services"
-            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
+            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
           >
             Services
           </Link>
-          <a
+          <button
+            type="button"
             onClick={() => handleScroll("process")}
-            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
+            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
           >
             Our Process
-          </a>
-          <a
+          </button>
+          <button
+            type="button"
             onClick={() => handleScroll("portfolio")}
-            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
+            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
           >
             Work Showcase
-          </a>
-          <a
+          </button>
+          <button
+            type="button"
             onClick={() => handleScroll("stats")}
-            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200"
+            className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
           >
             Why Us
-          </a>
+          </button>
         </nav>
 
-        {/* CTA */}
-        <div>
+        {/* CTA - desktop only */}
+        <div className="hidden md:block">
           <Link
             href="/contact"
-           
             className="relative px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-sm flex items-center gap-2 hover:bg-zinc-200 transition-colors duration-300 shadow-[0_4px_20px_rgba(255,255,255,0.15)] group"
           >
             Get a Website
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
+        </div>
+
+        {/* Hamburger - mobile only */}
+        <button
+          type="button"
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMobileMenuOpen}
+          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-white/5 text-white active:scale-95 transition-transform duration-150 touch-manipulation"
+        >
+          {isMobileMenuOpen ? (
+            <X className="w-5 h-5" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile dropdown menu */}
+      <div
+        className={`md:hidden overflow-hidden transition-[grid-template-rows] duration-300 ease-out grid ${
+          isMobileMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div
+            className={`mt-3 pt-3 border-t border-white/10 flex flex-col transition-opacity duration-200 ${
+              isMobileMenuOpen ? "opacity-100 delay-100" : "opacity-0"
+            }`}
+          >
+            <Link
+              href="/services"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full py-3 text-base font-medium text-zinc-300 hover:text-white active:bg-white/5 rounded-lg px-2 transition-colors duration-200 touch-manipulation"
+            >
+              Services
+            </Link>
+            <button
+              type="button"
+              onClick={() => handleScroll("process")}
+              className="w-full py-3 text-left text-base font-medium text-zinc-300 hover:text-white active:bg-white/5 rounded-lg px-2 cursor-pointer transition-colors duration-200 touch-manipulation"
+            >
+              Our Process
+            </button>
+            <button
+              type="button"
+              onClick={() => handleScroll("portfolio")}
+              className="w-full py-3 text-left text-base font-medium text-zinc-300 hover:text-white active:bg-white/5 rounded-lg px-2 cursor-pointer transition-colors duration-200 touch-manipulation"
+            >
+              Work Showcase
+            </button>
+            <button
+              type="button"
+              onClick={() => handleScroll("stats")}
+              className="w-full py-3 text-left text-base font-medium text-zinc-300 hover:text-white active:bg-white/5 rounded-lg px-2 cursor-pointer transition-colors duration-200 touch-manipulation"
+            >
+              Why Us
+            </button>
+
+            {/* CTA - last row, full width */}
+            <Link
+              href="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-2 w-full px-5 py-3 rounded-xl bg-white text-black font-semibold text-sm flex items-center justify-center gap-2 hover:bg-zinc-200 active:scale-[0.98] transition-all duration-200 shadow-[0_4px_20px_rgba(255,255,255,0.15)] group touch-manipulation"
+            >
+              Get a Website
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </div>
     </header>
