@@ -1,45 +1,48 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Sparkles, Calendar, ShoppingBag, ShieldCheck, CheckCircle2, XCircle } from "lucide-react";
+import { Sparkles, CheckCircle2, XCircle } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 // Portfolio projects
+// NOTE: "stat" values below are placeholders — swap in your real results
+// once you have them (or remove the stat badge if you'd rather not show one yet).
 const INDUSTRIES = [
   {
-    id: "contractor",
-    name: "HVAC & Plumbing",
-    stat: "+210% Booking Increase",
-    beforeTitle: "Apex Plumbing Services - Home",
-    beforeDesc: "We do plumbing repairs, leaks, toilets, and water heaters. Call us anytime. Open 24 hours. Serving the local area since 1999.",
-    afterTitle: "APEX FLOW",
-    afterSub: "High-Performance Smart Plumbing Solutions",
-    afterDesc: "Emergency response in under 45 minutes. Schedule transparently online in 3 clicks.",
+    id: "salon",
+    name: "Celebrity Hair Salon",
+    stat: "+180% Online Bookings",
+    beforeTitle: "Celebrity Hair Salon - Home",
+    beforeDesc:
+      "Walk-ins welcome. We offer haircuts, color, and styling for men and women. Call the shop to book or ask about our monthly specials.",
+    afterImage: "/samples/salon1.png",
+    afterAlt: "Celebrity Hair Salon redesigned website screenshot",
   },
   {
-    id: "medical",
-    name: "Dental Clinic",
-    stat: "3x Online Appointments",
-    beforeTitle: "Downtown Family Dentistry Clinic",
-    beforeDesc: "Dr. Smith and staff welcome you. We provide cleaning, crowns, implants. Fill out the PDF form and bring it to your appointment.",
-    afterTitle: "LUMINA DENTAL",
-    afterSub: "Modern Dentistry, Engineered for Comfort",
-    afterDesc: "Book instantly online. Complete digital onboarding in 60 seconds. Modern dental care.",
+    id: "volt",
+    name: "Volt.",
+    stat: "+120% Trial Sign-Ups",
+    beforeTitle: "Volt Fitness Training",
+    beforeDesc:
+      "Personal training and group classes. Flexible schedule, all fitness levels welcome. Contact us by phone or stop by the gym to sign up.",
+    afterImage: "/samples/volt3.png",
+    afterAlt: "Volt. redesigned website screenshot",
   },
   {
-    id: "ecommerce",
-    name: "E-Commerce Boutique",
-    stat: "+84% Checkout Rate",
-    beforeTitle: "Fashion Wear Online Store Shop",
-    beforeDesc: "Check out our new arrivals. We sell dresses, shirts, jeans. Shipping takes 5-10 business days. Returns require calling us.",
-    afterTitle: "AURA STUDIO",
-    afterSub: "Curated Sustainable Luxury Apparel",
-    afterDesc: "Sleek 1-click checkout. Real-time stock status. Ground shipping is carbon-neutral and free.",
+    id: "grooming",
+    name: "Bantay Grooming",
+    stat: "+95% Appointment Requests",
+    beforeTitle: "Bantay Pet Grooming Services",
+    beforeDesc:
+      "Dog and cat grooming, bathing, and nail trims. Drop off your pet anytime during business hours. Call ahead for large breeds.",
+    afterImage: "/samples/petgrooming1.png",
+    afterAlt: "Bantay Grooming redesigned website screenshot",
   },
 ];
 
@@ -47,9 +50,11 @@ export default function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const showcaseRef = useRef<HTMLDivElement>(null);
+  const sliderContainerRef = useRef<HTMLDivElement>(null);
 
   const [activeTab, setActiveTab] = useState(0);
   const [sliderPos, setSliderPos] = useState(50); // percentage (0 to 100)
+  const [containerWidth, setContainerWidth] = useState(0);
   const isDragging = useRef(false);
 
   useEffect(() => {
@@ -88,9 +93,24 @@ export default function Portfolio() {
     );
   }, []);
 
+  // Track the slider container's actual pixel width so the "after" image
+  // stays full-size and gets *revealed* as you drag, instead of squishing
+  // to fit the shrinking clip width.
+  useEffect(() => {
+    const el = sliderContainerRef.current;
+    if (!el) return;
+
+    const updateWidth = () => setContainerWidth(el.getBoundingClientRect().width);
+    updateWidth();
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    resizeObserver.observe(el);
+    return () => resizeObserver.disconnect();
+  }, []);
+
   // Handle slide movement
   const handleMove = (clientX: number) => {
-    const container = document.getElementById("slider-container");
+    const container = sliderContainerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const x = clientX - rect.left;
@@ -177,6 +197,7 @@ export default function Portfolio() {
 
           <div
             id="slider-container"
+            ref={sliderContainerRef}
             className="relative w-full aspect-[16/10] sm:aspect-[16/9] border border-white/10 rounded-3xl overflow-hidden bg-zinc-950 select-none shadow-2xl cursor-ew-resize"
             onMouseMove={onMouseMove}
             onTouchMove={onTouchMove}
@@ -220,67 +241,21 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* 2. AFTER PANEL (NEXUS Design - Absolute Overlay Clipped by Slider) */}
+            {/* 2. AFTER PANEL (Real NEXUS Screenshot - Clipped by Slider) */}
             <div
-              className="absolute inset-y-0 left-0 h-full overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-indigo-950/20 text-white border-r border-white/20 select-none"
-              style={{ width: `${sliderPos}%` }}
-            >
-              {/* Force inner content width to match container width to prevent stretching */}
-              <div className="absolute inset-0 w-[1000px] max-w-[85vw] h-full p-4 sm:p-8 flex flex-col justify-between font-sans">
-                {/* Modern Header */}
-                <div className="flex justify-between items-center border-b border-white/10 pb-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-purple-500 to-cyan-400 flex items-center justify-center">
-                      <span className="text-[10px] font-black text-white">N</span>
-                    </div>
-                    <span className="font-black text-xs sm:text-base tracking-wider uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
-                      {project.afterTitle}
-                    </span>
-                  </div>
-                  <div className="text-[10px] text-emerald-400 bg-emerald-950/30 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold flex items-center gap-1 backdrop-blur-sm">
-                    <ShieldCheck className="w-3.5 h-3.5" /> SECURE (0.4s speed)
-                  </div>
-                </div>
-
-                {/* Modern Content */}
-                <div className="flex-1 flex flex-col justify-center gap-4 py-4 max-w-md">
-                  <div className="flex items-center gap-1.5 px-2.5 py-0.5 self-start rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 font-bold text-[9px] uppercase tracking-wider">
-                    <Sparkles className="w-2.5 h-2.5 text-purple-400" />
-                    Engineered for Conversions
-                  </div>
-                  <h1 className="text-lg sm:text-3xl font-black tracking-tight text-white leading-none">
-                    {project.afterSub}
-                  </h1>
-                  <p className="text-zinc-400 text-xs sm:text-sm font-medium leading-relaxed max-w-sm">
-                    {project.afterDesc}
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button className="px-5 py-2.5 rounded-xl font-bold bg-white text-black text-xs sm:text-sm hover:bg-zinc-200 transition-colors shadow-lg flex items-center justify-center gap-1.5">
-                      {project.id === "ecommerce" ? (
-                        <>
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          Shop Collection
-                        </>
-                      ) : (
-                        <>
-                          <Calendar className="w-3.5 h-3.5" />
-                          Book Appointment
-                        </>
-                      )}
-                    </button>
-                    <button className="px-5 py-2.5 rounded-xl font-bold border border-white/10 bg-white/5 text-xs sm:text-sm hover:bg-white/10 transition-colors flex items-center justify-center">
-                      Learn More
-                    </button>
-                  </div>
-                </div>
-
-                {/* Modern Footer */}
-                <div className="flex justify-between items-center text-[9px] text-zinc-500 font-mono border-t border-white/5 pt-3">
-                  <span>© {new Date().getFullYear()} {project.afterTitle}. All Rights Reserved.</span>
-                  <span>POWERED BY NEXUS</span>
-                </div>
-              </div>
-            </div>
+  className="absolute inset-0 w-full h-full select-none bg-zinc-950"
+  style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
+>
+  <Image
+    src={project.afterImage}
+    alt={project.afterAlt}
+    fill
+    sizes="100vw"
+    className="object-cover object-top"
+    priority={activeTab === 0}
+  />
+  <div className="absolute inset-y-0 right-0 w-px bg-white/20" />
+</div>
 
             {/* 3. DRAGGING HANDLE BAR */}
             <div
@@ -308,6 +283,13 @@ export default function Portfolio() {
           <div className="text-center text-xs text-zinc-500 font-medium">
             💡 Drag the slider handle left/right to view the direct transformation.
           </div>
+
+          <a
+            href="/work"
+            className="self-center flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm border border-white/10 bg-white/5 hover:bg-white/10 text-white transition-colors duration-300"
+          >
+            View Full Case Studies
+          </a>
         </div>
       </div>
     </section>

@@ -160,13 +160,13 @@ export default function Navbar() {
           >
             Our Process
           </button>
-          <button
-            type="button"
-            onClick={() => handleScroll("portfolio")}
+          <Link
+            href="/work"
             className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
           >
-            Work Showcase
-          </button>
+            Our Work
+          </Link>
+
           <button
             type="button"
             onClick={() => handleScroll("stats")}
