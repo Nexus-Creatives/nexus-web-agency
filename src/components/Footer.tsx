@@ -35,7 +35,14 @@ export default function Footer() {
         <div className="text-zinc-500 text-xs sm:text-sm font-medium text-center md:text-left">
           © {new Date().getFullYear()} NEXUS Agency. Engineered with precision for small business growth. All rights reserved.
         </div>
-
+            <div className="flex gap-4 text-xs text-zinc-500">
+              <a href="/privacy-policy" className="hover:text-zinc-300 transition-colors">
+                Privacy Policy
+              </a>
+              <a href="/terms-of-service" className="hover:text-zinc-300 transition-colors">
+                Terms of Service
+              </a>
+            </div>
         {/* Action: Scroll to Top */}
         <button
           onClick={scrollToTop}
@@ -44,8 +51,9 @@ export default function Footer() {
           <span>Top</span>
           <ArrowUp className="w-3.5 h-3.5" />
         </button>
-
+      
       </div>
+      
     </footer>
   );
 }
