@@ -167,13 +167,12 @@ export default function Navbar() {
             Our Work
           </Link>
 
-          <button
-            type="button"
-            onClick={() => handleScroll("stats")}
+          <Link
+            href="/pricing"
             className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
           >
-            Why Us
-          </button>
+            Packages
+          </Link>
         </nav>
 
         {/* CTA - desktop only */}
@@ -236,13 +235,13 @@ export default function Navbar() {
             >
               Our Work
             </Link>
-            <button
-              type="button"
-              onClick={() => handleScroll("stats")}
-              className="w-full py-3 text-left text-base font-medium text-zinc-300 hover:text-white active:bg-white/5 rounded-lg px-2 cursor-pointer transition-colors duration-200 touch-manipulation"
+            <Link
+              href="/pricing"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full py-3 text-base font-medium text-zinc-300 hover:text-white active:bg-white/5 rounded-lg px-2 transition-colors duration-200 touch-manipulation"
             >
-              Why Us
-            </button>
+              Packages
+            </Link>
 
             {/* CTA - last row, full width */}
             <Link

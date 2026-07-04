@@ -288,7 +288,7 @@ export default function Portfolio() {
             href="/work"
             className="self-center flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm border border-white/10 bg-white/5 hover:bg-white/10 text-white transition-colors duration-300"
           >
-            View Full Case Studies
+            View Full Nexus Concepts
           </a>
         </div>
       </div>
