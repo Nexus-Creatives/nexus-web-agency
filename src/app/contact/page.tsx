@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Mail, Phone, MapPin, Send, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Sparkles, CheckCircle } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -11,6 +11,20 @@ export default function ContactPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
+
+  const [formState, setFormState] = useState({
+    name: "",
+    business: "", // kept empty/optional here, API route only requires name+business+email
+    website: "",
+    email: "",
+    challenge: "General inquiry via Contact Page",
+    message: "",
+  });
+
+  const [honeypot, setHoneypot] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -21,6 +35,41 @@ export default function ContactPage() {
     if (hero) tl.fromTo(hero, { opacity: 0, y: 30 }, { opacity: 1, y: 0 });
     if (form) tl.fromTo(form, { opacity: 0, y: 50 }, { opacity: 1, y: 0 }, "-=0.7");
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formState.name,
+          business: formState.business || "Not specified",
+          website: formState.website,
+          email: formState.email,
+          challenge: `${formState.challenge}\n\nMessage: ${formState.message}`,
+          honeypot,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setLoading(false);
+      setSubmitted(true);
+    } catch (err) {
+      setLoading(false);
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+    }
+  };
 
   return (
     <>
@@ -78,28 +127,84 @@ export default function ContactPage() {
             </div>
 
             {/* Form */}
-            <form className="bg-zinc-900/30 border border-white/10 p-6 sm:p-8 rounded-2xl sm:rounded-3xl flex flex-col gap-5 sm:gap-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {!submitted ? (
+              <form
+                onSubmit={handleSubmit}
+                className="bg-zinc-900/30 border border-white/10 p-6 sm:p-8 rounded-2xl sm:rounded-3xl flex flex-col gap-5 sm:gap-6"
+              >
+                {/* Honeypot field — hidden from real users, bots fill it automatically */}
                 <input
                   type="text"
-                  placeholder="Name"
-                  className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
+                  name="website_url"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="absolute -left-[9999px] w-px h-px opacity-0"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
                 />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
-                />
+
+                {error && (
+                  <div className="rounded-xl border border-red-500/30 bg-red-950/20 px-4 py-3 text-sm text-red-300">
+                    {error}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Name"
+                    value={formState.name}
+                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                    className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email"
+                    value={formState.email}
+                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                    className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+                <textarea
+                  placeholder="Tell us about your project..."
+                  rows={5}
+                  required
+                  value={formState.message}
+                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                ></textarea>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-white text-black font-bold py-3.5 sm:py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Request <Send className="w-4 h-4 shrink-0" />
+                    </>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <div className="bg-zinc-900/30 border border-emerald-500/20 p-6 sm:p-8 rounded-2xl sm:rounded-3xl flex flex-col items-center justify-center text-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                  <CheckCircle className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Message Sent</h3>
+                <p className="text-zinc-400 text-sm sm:text-base max-w-sm">
+                  Thanks, {formState.name}! We&apos;ve received your request and will get back to you at{" "}
+                  <span className="text-purple-300 font-semibold">{formState.email}</span> shortly.
+                </p>
               </div>
-              <textarea
-                placeholder="Tell us about your project..."
-                rows={5}
-                className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors resize-none"
-              ></textarea>
-              <button className="w-full bg-white text-black font-bold py-3.5 sm:py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors text-sm sm:text-base">
-                Send Request <Send className="w-4 h-4 shrink-0" />
-              </button>
-            </form>
+            )}
           </div>
         </div>
       </main>

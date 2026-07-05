@@ -38,6 +38,8 @@ export default function Contact() {
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState(""); // bots fill this, humans never see it
 
   useEffect(() => {
     const header = headerRef.current;
@@ -123,12 +125,24 @@ export default function Contact() {
     });
   }, [formState, submitted]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
-    // Simulate elite submission sequence
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formState, honeypot }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
       setLoading(false);
       setSubmitted(true);
 
@@ -139,7 +153,12 @@ export default function Contact() {
         { opacity: 0, scale: 0.9, rotateX: 10 },
         { opacity: 1, scale: 1, rotateX: 0, duration: 0.8, ease: "back.out(1.4)" }
       );
-    }, 1500);
+    } catch (err) {
+      setLoading(false);
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+    }
   };
 
   return (
@@ -273,6 +292,24 @@ export default function Contact() {
                 onSubmit={handleSubmit}
                 className="bg-zinc-900/40 border border-white/10 p-6 sm:p-8 rounded-3xl backdrop-blur-md flex flex-col gap-5 shadow-xl"
               >
+                {/* Honeypot field — hidden from real users, bots fill it automatically */}
+                <input
+                  type="text"
+                  name="website_url"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="absolute -left-[9999px] w-px h-px opacity-0"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
+                {error && (
+                  <div className="rounded-xl border border-red-500/30 bg-red-950/20 px-4 py-3 text-sm text-red-300">
+                    {error}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name */}
                   <div className="flex flex-col gap-2">
