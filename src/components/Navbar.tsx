@@ -164,7 +164,7 @@ export default function Navbar() {
             href="/work"
             className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
           >
-            Our Work
+            Builds
           </Link>
 
           <Link
@@ -233,7 +233,7 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full py-3 text-base font-medium text-zinc-300 hover:text-white active:bg-white/5 rounded-lg px-2 transition-colors duration-200 touch-manipulation"
             >
-              Our Work
+              Builds
             </Link>
             <Link
               href="/pricing"

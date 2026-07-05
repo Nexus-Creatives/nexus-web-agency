@@ -188,34 +188,6 @@ export default function Hero() {
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
-
-          {/* Core Trust Pillars */}
-          <div
-            ref={trustRef}
-            className="grid grid-cols-3 gap-6 w-full border-t border-white/5 pt-8 mt-6"
-          >
-            <div className="flex flex-col gap-1">
-              <span className="text-zinc-500 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-amber-400" />
-                Performance
-              </span>
-              <span className="text-white font-extrabold text-lg sm:text-xl">0.4s Speed</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-zinc-500 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                <Target className="w-3.5 h-3.5 text-cyan-400" />
-                Conversion
-              </span>
-              <span className="text-white font-extrabold text-lg sm:text-xl">3x Lead Rate</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-zinc-500 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
-                Revenue
-              </span>
-              <span className="text-white font-extrabold text-lg sm:text-xl">+140% Growth</span>
-            </div>
-          </div>
         </div>
 
         {/* Right: Glassmorphic Demo Interface (Interactive Element) */}

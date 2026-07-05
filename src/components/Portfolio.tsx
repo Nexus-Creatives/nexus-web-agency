@@ -17,7 +17,6 @@ const INDUSTRIES = [
   {
     id: "salon",
     name: "Celebrity Hair Salon",
-    stat: "+180% Online Bookings",
     beforeTitle: "Celebrity Hair Salon - Home",
     beforeDesc:
       "Walk-ins welcome. We offer haircuts, color, and styling for men and women. Call the shop to book or ask about our monthly specials.",
@@ -27,7 +26,6 @@ const INDUSTRIES = [
   {
     id: "volt",
     name: "Volt.",
-    stat: "+120% Trial Sign-Ups",
     beforeTitle: "Volt Fitness Training",
     beforeDesc:
       "Personal training and group classes. Flexible schedule, all fitness levels welcome. Contact us by phone or stop by the gym to sign up.",
@@ -37,7 +35,6 @@ const INDUSTRIES = [
   {
     id: "grooming",
     name: "Bantay Grooming",
-    stat: "+95% Appointment Requests",
     beforeTitle: "Bantay Pet Grooming Services",
     beforeDesc:
       "Dog and cat grooming, bathing, and nail trims. Drop off your pet anytime during business hours. Call ahead for large breeds.",
@@ -189,12 +186,6 @@ export default function Portfolio() {
 
         {/* Interactive Slider Showcase Container */}
         <div ref={showcaseRef} className="flex flex-col gap-6 max-w-5xl mx-auto">
-          {/* Key Stat Badge */}
-          <div className="self-center flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold text-sm shadow-md animate-pulse">
-            <CheckCircle2 className="w-4 h-4" />
-            Nexus Output: {project.stat}
-          </div>
-
           <div
             id="slider-container"
             ref={sliderContainerRef}
