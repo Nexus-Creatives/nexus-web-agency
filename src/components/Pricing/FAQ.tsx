@@ -74,7 +74,7 @@ export default function FAQ() {
             Frequently Asked Questions
           </span>
 
-          <h2 className="mt-6 text-5xl font-black text-white">
+          <h2 className="mt-6 break-words text-3xl font-black text-white sm:text-4xl md:text-5xl">
             Have Questions?
           </h2>
 

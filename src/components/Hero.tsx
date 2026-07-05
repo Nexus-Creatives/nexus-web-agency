@@ -167,7 +167,7 @@ export default function Hero() {
           ref={titleRef}
           className="font-sans font-black text-4xl sm:text-5xl md:text-6xl tracking-tight text-white leading-[1.1] max-w-2xl mx-auto md:mx-0 text-center md:text-left"
         >
-          Websites That Turn Clicks Into Customers
+          The Future of Web Design Is Here. Powered by AI.
           </h1>
 
           {/* Description */}
@@ -175,7 +175,7 @@ export default function Hero() {
             ref={descRef}
             className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-xl font-medium leading-relaxed"
           >
-            Looking to grow your business? Outdated templates lose sales. We design custom, high-speed websites engineered with behavioral psychology to unlock continuous cash flow for your business.
+            Looking to grow your business? Outdated templates lose sales. We design custom, high-speed websites — engineered with behavioral psychology and sharpened by AI-driven development — to unlock continuous cash flow for your business.
           </p>
 
           {/* CTA Buttons */}

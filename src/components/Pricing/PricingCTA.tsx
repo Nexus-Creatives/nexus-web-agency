@@ -60,13 +60,13 @@ export default function PricingCTA() {
               Ready to Get Started?
             </span>
 
-            <h2 className="mt-8 text-5xl font-black leading-tight text-white md:text-6xl">
+            <h2 className="mt-8 break-words text-3xl font-black leading-tight text-white sm:text-4xl md:text-6xl">
 
               Let's Build a Website
               <br />
 
               <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                Your Customers Will Love
+                Your Clients Will Love
               </span>
 
             </h2>
@@ -121,7 +121,7 @@ export default function PricingCTA() {
 
             {/* Bottom Stats */}
 
-            <div className="mt-16 grid gap-6 border-t border-white/10 pt-10 md:grid-cols-3">
+            <div className="mt-16 grid gap-6 border-t border-white/10 pt-10 text-center md:grid-cols-3">
 
               <div>
 

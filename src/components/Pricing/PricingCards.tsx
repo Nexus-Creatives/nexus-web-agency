@@ -178,7 +178,7 @@ export default function PricingCards() {
                       </p>
                     )}
 
-                    <h4 className="mt-2 whitespace-nowrap bg-gradient-to-r from-white to-blue-300 bg-clip-text text-4xl font-black leading-none tracking-tight text-transparent">
+                    <h4 className="mt-2 break-words bg-gradient-to-r from-white to-blue-300 bg-clip-text text-3xl font-black leading-tight tracking-tight text-transparent sm:text-4xl">
                       {plan.price}
                     </h4>
                   </div>

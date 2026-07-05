@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ServiceDetailPage from "@/components/ServiceDetailPage";
 import { SERVICE_CONTENT, getServiceBySlug } from "@/lib/services";
+import Footer from "@/components/Footer";
 
 type ServicePageProps = {
   params: Promise<{
@@ -37,5 +38,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
     notFound();
   }
 
-  return <ServiceDetailPage slug={slug} />;
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <ServiceDetailPage slug={slug} />
+      <Footer />
+    </div>
+  );
 }

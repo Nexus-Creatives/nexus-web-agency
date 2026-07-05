@@ -94,7 +94,7 @@ export default function WhyChooseUs() {
             Why NEXUS?
           </span>
 
-          <h2 className="mt-6 text-5xl font-black text-white">
+          <h2 className="mt-6 break-words text-3xl font-black text-white sm:text-4xl md:text-5xl">
 
             Built for Businesses
             <br />
@@ -168,7 +168,7 @@ export default function WhyChooseUs() {
 
           <div className="text-center">
 
-            <h3 className="text-5xl font-black text-blue-400">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-blue-400">
               100%
             </h3>
 
@@ -180,7 +180,7 @@ export default function WhyChooseUs() {
 
           <div className="text-center">
 
-            <h3 className="text-5xl font-black text-cyan-400">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-cyan-400">
               SEO
             </h3>
 
@@ -192,7 +192,7 @@ export default function WhyChooseUs() {
 
           <div className="text-center">
 
-            <h3 className="text-5xl font-black text-purple-400">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-purple-400">
               Ongoing
             </h3>
 

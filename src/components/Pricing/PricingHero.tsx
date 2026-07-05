@@ -60,7 +60,7 @@ export default function PricingHero() {
         </div>
 
         {/* Title */}
-        <h1 className="pricing-title mt-8 text-5xl font-black leading-tight md:text-7xl">
+        <h1 className="pricing-title mt-8 break-words text-4xl font-black leading-tight sm:text-5xl md:text-7xl">
 
           Simple Pricing.
 
