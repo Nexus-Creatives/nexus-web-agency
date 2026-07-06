@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "NEXUS | Custom Website Design & Development Agency",
     description: SITE_DESCRIPTION,
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   
 };

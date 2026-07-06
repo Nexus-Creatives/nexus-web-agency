@@ -227,16 +227,6 @@ export default function Hero() {
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-xs text-zinc-400 font-medium">
-                    <span>Client Acquisitions</span>
-                    <span className="text-emerald-400 font-bold">+184%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
-                    <div className="h-full w-[85%] bg-linear-to-r from-purple-500 to-cyan-500 rounded-full" />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <div className="flex justify-between text-xs text-zinc-400 font-medium">
                     <span>Site Speed Rating</span>
                     <span className="text-cyan-400 font-bold">99/100</span>
                   </div>
@@ -247,11 +237,21 @@ export default function Hero() {
 
                 <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-xs text-zinc-400 font-medium">
-                    <span>SEO Organic Reach</span>
-                    <span className="text-indigo-400 font-bold">Top 3 Rank</span>
+                    <span>Mobile Responsiveness</span>
+                    <span className="text-emerald-400 font-bold">100%</span>
                   </div>
                   <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
-                    <div className="h-full w-[90%] bg-linear-to-r from-indigo-500 to-purple-500 rounded-full" />
+                    <div className="h-full w-[100%] bg-linear-to-r from-purple-500 to-cyan-500 rounded-full" />
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <div className="flex justify-between text-xs text-zinc-400 font-medium">
+                    <span>SEO Foundation</span>
+                    <span className="text-indigo-400 font-bold">Fully Optimized</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
+                    <div className="h-full w-[95%] bg-linear-to-r from-indigo-500 to-purple-500 rounded-full" />
                   </div>
                 </div>
               </div>
