@@ -4,11 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Menu, X } from "lucide-react";
 import Image from "next/image";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar() {
   const navRef = useRef<HTMLDivElement>(null);
@@ -17,11 +14,13 @@ export default function Navbar() {
   const ctaRef = useRef<HTMLAnchorElement>(null);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Get current path (e.g., "/pricing" -> "pricing")
   const pathname = usePathname();
   const pageName = pathname?.replace("/", "") || "home";
 
+  // Reveal animation (unchanged) — GSAP is still fine for this,
+  // it's a one-time entrance, not a scroll-scrubbed effect.
   useEffect(() => {
     const nav = navRef.current;
     const logo = logoRef.current;
@@ -30,77 +29,25 @@ export default function Navbar() {
 
     if (!nav) return;
 
-    // Initial state
     gsap.set(nav, { y: -100, opacity: 0 });
     if (logo) gsap.set(logo, { opacity: 0, scale: 0.8 });
     if (links) gsap.set(links, { opacity: 0, y: -20 });
     if (cta) gsap.set(cta, { opacity: 0, scale: 0.9 });
 
-    // Timeline for nav reveal
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-    tl.to(nav, {
-      y: 0,
-      opacity: 1,
-      duration: .5,
-      delay: 0.5,
-    });
+    tl.to(nav, { y: 0, opacity: 1, duration: 0.5, delay: 0.5 });
 
     if (logo) {
-      tl.to(
-        logo,
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.8,
-        },
-        "-=0.6"
-      );
+      tl.to(logo, { opacity: 1, scale: 1, duration: 0.8 }, "-=0.6");
     }
-
     if (links && links.length > 0) {
-      tl.to(
-        links,
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.1,
-          duration: 0.8,
-        },
-        "-=0.6"
-      );
+      tl.to(links, { opacity: 1, y: 0, stagger: 0.1, duration: 0.8 }, "-=0.6");
     }
-
     if (cta) {
-      tl.to(
-        cta,
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.6,
-        },
-        "-=0.4"
-      );
+      tl.to(cta, { opacity: 1, scale: 1, duration: 0.6 }, "-=0.4");
     }
 
-    // Sticky transition on scroll
-    gsap.to(nav, {
-      border: 0,
-      marginTop: 0,
-      width: "100%",
-      maxWidth: "100%",
-      borderRadius: 0,
-      duration: 0.6,
-      ease: "power2.inOut",
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "100px top",
-        scrub: 0.5,
-      },
-    });
-
-    // Magnetic CTA Hover effect
     const onMouseMove = (e: MouseEvent) => {
       if (!cta) return;
       const bounds = cta.getBoundingClientRect();
@@ -117,12 +64,7 @@ export default function Navbar() {
 
     const onMouseLeave = () => {
       if (!cta) return;
-      gsap.to(cta, {
-        x: 0,
-        y: 0,
-        duration: 0.5,
-        ease: "elastic.out(1, 0.3)",
-      });
+      gsap.to(cta, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
     };
 
     if (cta) {
@@ -135,16 +77,37 @@ export default function Navbar() {
         cta.removeEventListener("mousemove", onMouseMove);
         cta.removeEventListener("mouseleave", onMouseLeave);
       }
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      tl.kill();
     };
+  }, []);
+
+  // Sticky/full-width toggle — binary, no scrub, no in-between state.
+  useEffect(() => {
+    const THRESHOLD = 40; // px scrolled before it locks to full width
+
+    let ticking = false;
+    const updateState = () => {
+      setIsScrolled(window.scrollY > THRESHOLD);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateState);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    updateState(); // correct state on mount (e.g. page loaded mid-scroll)
+
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleScroll = (id: string) => {
     setIsMobileMenuOpen(false);
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -152,7 +115,11 @@ export default function Navbar() {
       <header
         ref={navRef}
         data-page={pageName}
-        className="mt-4 w-[92%] max-w-7xl pointer-events-auto backdrop-blur-md bg-zinc-950/70 border border-[#340034]/50 rounded-2xl data-[page=pricing]:border-blue-400/50 shadow-[0_0_10px_#8E33E7] data-[page=pricing]:shadow-[0_0_10px_#60A5FA] transition-all duration-300"
+        className={`pointer-events-auto backdrop-blur-md bg-zinc-950/70 border border-[#340034]/50 data-[page=pricing]:border-blue-400/50 shadow-[0_0_10px_#8E33E7] data-[page=pricing]:shadow-[0_0_10px_#60A5FA] transition-all duration-300 ease-out ${
+          isScrolled
+            ? "mt-0 w-full max-w-full rounded-none border-x-0 border-t-0"
+            : "mt-4 w-[92%] max-w-7xl rounded-2xl"
+        }`}
       >
         <div className="max-w-7xl mx-auto w-full px-6 py-3 flex items-center justify-between">
           {/* Logo */}
@@ -198,7 +165,6 @@ export default function Navbar() {
             >
               Portfolio
             </Link>
-
             <Link
               href="/pricing"
               className="text-sm font-medium text-zinc-400 hover:text-white cursor-pointer transition-colors duration-200 touch-manipulation"
@@ -227,11 +193,7 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-white/5 text-white active:scale-95 transition-transform duration-150 touch-manipulation"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
@@ -275,8 +237,6 @@ export default function Navbar() {
               >
                 Packages
               </Link>
-
-              {/* CTA - last row, full width */}
               <Link
                 href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
