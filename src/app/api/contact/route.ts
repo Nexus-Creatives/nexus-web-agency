@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     }
 
     await resend.emails.send({
-      from: "Nexus Contact Form <onboarding@resend.dev>", // swap once your domain is verified in Resend
+      from: "nexuscreatives.dev@gmail.com", // swap once your domain is verified in Resend
       to: process.env.CONTACT_EMAIL as string,
       replyTo: email,
       subject: `New lead: ${business}`,
