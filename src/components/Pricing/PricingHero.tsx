@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { ArrowRight, FolderOpen } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -79,30 +80,30 @@ export default function PricingHero() {
 
         {/* Buttons */}
         <div className="pricing-buttons mt-12 flex flex-col items-center justify-center gap-5 sm:flex-row">
+      {/* Link to Contact */}
+      <Link
+        href="/contact"
+        className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(59,130,246,.45)]"
+      >
+        Get Free Quote
+        <ArrowRight
+          size={18}
+          className="transition-transform group-hover:translate-x-1"
+        />
+      </Link>
 
-          <button className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-4 font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(59,130,246,.45)]">
-
-            Get Free Quote
-
-            <ArrowRight
-              size={18}
-              className="transition-transform group-hover:translate-x-1"
-            />
-
-          </button>
-
-          <button className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 backdrop-blur-xl transition-all duration-300 hover:border-blue-400/50 hover:bg-white/10">
-
-            View Portfolio
-
-            <FolderOpen
-              size={18}
-              className="transition-transform group-hover:rotate-6"
-            />
-
-          </button>
-
-        </div>
+      {/* Link to Work */}
+      <Link
+        href="/work"
+        className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 backdrop-blur-xl transition-all duration-300 hover:border-blue-400/50 hover:bg-white/10"
+      >
+        View Portfolio
+        <FolderOpen
+          size={18}
+          className="transition-transform group-hover:rotate-6"
+        />
+      </Link>
+    </div>
 
         {/* Small Note */}
         <p className="mt-10 text-sm text-gray-500">
