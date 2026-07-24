@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, business, website, email, challenge, honeypot } = body;
+    const { name, business, website, email, phone, challenge, honeypot } = body;
 
     // Honeypot check — bots fill this hidden field, real users never see it
     if (honeypot) {
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     }
 
     await resend.emails.send({
-      from: "Nexus Contact Form <onboarding@resend.dev>", // swap once your domain is verified in Resend
+      from: "Nexus Contact Form <contact@mail.nexuscreatives.dev>", 
       to: process.env.CONTACT_EMAIL as string,
       replyTo: email,
       subject: `New lead: ${business}`,
@@ -40,6 +40,7 @@ export async function POST(req: Request) {
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Business:</strong> ${business}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || "None provided"}</p>
         <p><strong>Current Website:</strong> ${website || "None provided"}</p>
         <p><strong>Biggest Challenge:</strong> ${challenge}</p>
       `,

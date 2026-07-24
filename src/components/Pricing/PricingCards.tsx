@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { gsap } from "gsap";
 import {
   Check,
@@ -30,6 +31,7 @@ interface Plan {
   description: string;
   features: string[];
   button: string;
+  packageSlug: "launch" | "grow" | "scale" | "custom";
   popular: boolean;
 }
 
@@ -51,6 +53,7 @@ const plans = [
       "2 Revisions",
     ],
     button: "Get Started",
+    packageSlug: "launch",
     popular: false,
   },
   {
@@ -70,7 +73,8 @@ const plans = [
       "Light Animations",
       "3 Revisions",
     ],
-    button: "Most Popular",
+    button: "Choose Grow",
+    packageSlug: "grow",
     popular: true,
   },
   {
@@ -90,6 +94,7 @@ const plans = [
       "Priority Support",
     ],
     button: "Let's Build",
+    packageSlug: "scale",
     popular: false,
   },
   {
@@ -108,6 +113,7 @@ const plans = [
       "Unlimited Consultation",
     ],
     button: "Book Consultation",
+    packageSlug: "custom",
     popular: false,
   },
  ] satisfies Plan[];
@@ -177,7 +183,7 @@ export default function PricingCards({ currency }: PricingCardsProps) {
             return (
               <div
                 key={plan.title}
-                className={`price-card group relative flex h-full min-w-0 flex-col overflow-hidden rounded-[28px] border backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_80px_rgba(59,130,246,.25)]
+                className={`price-card group relative flex h-full min-w-0 flex-col justify-between overflow-hidden rounded-[28px] border backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_80px_rgba(59,130,246,.25)]
                 ${
                   plan.popular
                     ? "border-blue-400/40 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.18),transparent_45%),rgba(255,255,255,0.06)] shadow-[0_0_0_1px_rgba(59,130,246,0.1)]"
@@ -201,7 +207,7 @@ export default function PricingCards({ currency }: PricingCardsProps) {
                   </div>
                 )}
 
-                <div className="relative flex h-full min-w-0 flex-col p-7 sm:p-8">
+                <div className="relative flex h-full min-w-0 flex-col justify-between p-7 sm:p-8">
                   <div className="mb-7 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-cyan-500 shadow-lg shadow-blue-500/25 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                     <Icon className="text-white" size={22} />
                   </div>
@@ -239,7 +245,8 @@ export default function PricingCards({ currency }: PricingCardsProps) {
                     ))}
                   </div>
 
-                  <button
+                  <Link
+                    href={`/contact?package=${plan.packageSlug}`}
                     className={`group/btn mt-9 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold transition-all duration-300
                     ${
                       plan.popular
@@ -252,7 +259,7 @@ export default function PricingCards({ currency }: PricingCardsProps) {
                       size={15}
                       className="transition-transform duration-300 group-hover/btn:translate-x-1"
                     />
-                  </button>
+                  </Link>
                 </div>
               </div>
             );

@@ -1,24 +1,51 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { gsap } from "gsap";
 import { Mail, Phone, MapPin, Send, Sparkles, CheckCircle } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 
-export default function ContactPage() {
+const packageOptions = {
+  launch: "Launch",
+  grow: "Grow",
+  scale: "Scale",
+  custom: "Custom Quote",
+  other: "Other / General Inquiry",
+} as const;
+
+type PackageSlug = keyof typeof packageOptions;
+
+function getPackageSlug(value: string | null): PackageSlug | null {
+  const packageSlug = value?.toLowerCase() as PackageSlug | undefined;
+  return packageSlug && packageSlug in packageOptions ? packageSlug : null;
+}
+
+function ContactPageContent() {
+  const searchParams = useSearchParams();
+  const selectedPackage = getPackageSlug(searchParams.get("package"));
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
-  const [formState, setFormState] = useState({
-    name: "",
-    business: "", // kept empty/optional here, API route only requires name+business+email
-    website: "",
-    email: "",
-    challenge: "General inquiry via Contact Page",
-    message: "",
+  const [formState, setFormState] = useState(() => {
+    const packageSlug = selectedPackage ?? "other";
+    const packageName = packageOptions[packageSlug];
+
+    return {
+      name: "",
+      business: "",
+      website: "",
+      email: "",
+      phone: "",
+      package: packageSlug,
+      challenge: "General inquiry via Contact Page",
+      message: selectedPackage
+        ? `Hi, I'm interested in the ${packageName} package. I'd like to learn more about how it could support my project.`
+        : "",
+    };
   });
 
   const [honeypot, setHoneypot] = useState("");
@@ -47,10 +74,11 @@ export default function ContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formState.name,
-          business: formState.business || "Not specified",
+          business: formState.business,
           website: formState.website,
           email: formState.email,
-          challenge: `${formState.challenge}\n\nMessage: ${formState.message}`,
+          phone: formState.phone,
+          challenge: `Interested Package: ${packageOptions[formState.package]}\n\n${formState.challenge}\n\nMessage: ${formState.message}`,
           honeypot,
         }),
       });
@@ -151,31 +179,122 @@ export default function ContactPage() {
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="name" className="text-sm font-semibold text-zinc-200">
+                      Your Name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      required
+                      autoComplete="name"
+                      placeholder="Jane Smith"
+                      value={formState.name}
+                      onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                      className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="business" className="text-sm font-semibold text-zinc-200">
+                      Business Name
+                    </label>
+                    <input
+                      id="business"
+                      type="text"
+                      required
+                      autoComplete="organization"
+                      placeholder="Acme Studio"
+                      value={formState.business}
+                      onChange={(e) => setFormState({ ...formState, business: e.target.value })}
+                      className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="email" className="text-sm font-semibold text-zinc-200">
+                      Business Email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      autoComplete="email"
+                      placeholder="jane@acmestudio.com"
+                      value={formState.email}
+                      onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                      className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="phone" className="text-sm font-semibold text-zinc-200">
+                      Phone <span className="text-zinc-500">(optional)</span>
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      placeholder="+63 912 345 6789"
+                      value={formState.phone}
+                      onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
+                      className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="website" className="text-sm font-semibold text-zinc-200">
+                    Current Website <span className="text-zinc-500">(optional)</span>
+                  </label>
                   <input
+                    id="website"
                     type="text"
-                    required
-                    placeholder="Name"
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
-                  />
-                  <input
-                    type="email"
-                    required
-                    placeholder="Email"
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                    autoComplete="url"
+                    placeholder="acmestudio.com"
+                    value={formState.website}
+                    onChange={(e) => setFormState({ ...formState, website: e.target.value })}
                     className="w-full min-w-0 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors"
                   />
                 </div>
-                <textarea
-                  placeholder="Tell us about your project, business, or challenge. The more details, the better we can assist you."
-                  rows={5}
-                  required
-                  value={formState.message}
-                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors resize-none"
-                ></textarea>
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="interested-package"
+                    className="text-sm font-semibold text-zinc-200"
+                  >
+                    Interested Package
+                  </label>
+                  <select
+                    id="interested-package"
+                    name="package"
+                    value={formState.package}
+                    onChange={(e) =>
+                      setFormState((current) => ({
+                        ...current,
+                        package: e.target.value as PackageSlug,
+                      }))
+                    }
+                    className="w-full min-w-0 appearance-none rounded-xl border border-white/10 bg-black/50 px-4 py-3 text-sm text-white transition-colors focus:border-purple-500 focus:outline-none sm:text-base"
+                  >
+                    {Object.entries(packageOptions).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="project-message" className="text-sm font-semibold text-zinc-200">
+                    Tell Us About Your Project
+                  </label>
+                  <textarea
+                    id="project-message"
+                    placeholder="Your goals, key requirements, timeline, or the challenge you want to solve."
+                    rows={5}
+                    required
+                    value={formState.message}
+                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                  />
+                </div>
                 <button
                   type="submit"
                   disabled={loading}
@@ -210,5 +329,15 @@ export default function ContactPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense
+      fallback={<main className="min-h-screen bg-zinc-950" aria-busy="true" />}
+    >
+      <ContactPageContent />
+    </Suspense>
   );
 }

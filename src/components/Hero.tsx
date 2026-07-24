@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ArrowRight, Sparkles, TrendingUp, Zap, Target } from "lucide-react";
+import { ArrowRight, Sparkles} from "lucide-react";
 import PlexusCanvas from "./PlexusCanvas";
 
 export default function Hero() {
